@@ -1,4 +1,6 @@
-﻿namespace APIISA
+﻿using System.Collections.Generic;
+
+namespace APIISA
 {
     public class Datum
     {
@@ -91,5 +93,6 @@
         public int medium { get; set; }
         public int youtube { get; set; }
         public double close { get; set; }*/
+        public List<TimeSery> timeSeries { get; set; }
     }
 }

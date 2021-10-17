@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -44,7 +46,7 @@ namespace APIISA
             }
             catch (Exception e)
             {
-                //Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
                 Console.WriteLine("sa a plantè");
             }
             
@@ -54,16 +56,36 @@ namespace APIISA
         {
             var p = new Program();
             p.GetInfo("BTC");
-            p.GetInfo("22");
+            double? resMax0,max,min;
             try
             {
-                var d = p.objectRes.data[0];
-                //Console.WriteLine(d[0].name);
+                resMax0 = p.objectRes.data[0].timeSeries[0].high;
+            
+                List<Double?> Max = new List<double?>();
+
+                foreach (var t in p.objectRes.data[0].timeSeries)
+                {
+                    Max.Add(t.high);
+                }
+
+                max = Max.Max();
+                min = Max.Min();
+            
+
+                for (int i = 0; i < 24; i++)
+                {
+                    resMax0 = p.objectRes.data[0].timeSeries[i].high;
+                    Console.WriteLine("{0} : {1}",i,150*resMax0/(max-min));
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Currency doesn't exist");
+                Console.WriteLine(e);
+                throw;
             }
+            
+
         }
+        
     }
 }
